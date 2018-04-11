@@ -1407,6 +1407,14 @@ static struct ctl_table vm_table[] = {
 		.mode		= 0644,
 		.proc_handler	= kvm_madv_instant_free_sysctl_handler,
 	},
+	{
+		.procname       = "shrink_caches_mb",
+		.data           = &sysctl_shrink_caches_mb,
+		.maxlen         = sizeof(int),
+		.mode           = 0644,
+		.proc_handler   = shrink_caches_sysctl_handler,
+		.extra1         = &one,
+	},
 #ifdef CONFIG_COMPACTION
 	{
 		.procname	= "compact_memory",

@@ -2529,6 +2529,10 @@ extern int kvm_ret_mem_advice;
 int kvm_madv_instant_free_sysctl_handler(struct ctl_table *table, int write,
 					 void __user *buffer, size_t *length,
 					 loff_t *ppos);
+extern int sysctl_shrink_caches_mb;
+int shrink_caches_sysctl_handler(struct ctl_table *table, int write,
+				 void __user *buffer, size_t *length,
+				 loff_t *ppos);
 #endif
 
 void drop_slab(void);

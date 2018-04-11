@@ -9,10 +9,12 @@
 #include <linux/writeback.h>
 #include <linux/sysctl.h>
 #include <linux/gfp.h>
+#include <linux/swap.h>
 #include "internal.h"
 
 /* A global variable is a bit ugly, but it keeps the code simple */
 int sysctl_drop_caches;
+int sysctl_shrink_caches_mb;
 
 static void drop_pagecache_sb(struct super_block *sb, void *unused)
 {
@@ -66,5 +68,28 @@ int drop_caches_sysctl_handler(struct ctl_table *table, int write,
 		}
 		stfu |= sysctl_drop_caches & 4;
 	}
+	return 0;
+}
+
+int shrink_caches_sysctl_handler(struct ctl_table *table, int write,
+	void __user *buffer, size_t *length, loff_t *ppos)
+{
+	int ret;
+	unsigned long nr_to_reclaim, page_reclaimed;
+
+	ret = proc_dointvec_minmax(table, write, buffer, length, ppos);
+	if (ret)
+		return ret;
+
+	nr_to_reclaim = sysctl_shrink_caches_mb * (1 << 20) / PAGE_SIZE;
+	if (write) {
+		page_reclaimed = shrink_all_memory(nr_to_reclaim);
+		if (page_reclaimed > 0)
+			lru_add_drain_all();
+
+		if (page_reclaimed != nr_to_reclaim)
+			return page_reclaimed;
+	}
+
 	return 0;
 }

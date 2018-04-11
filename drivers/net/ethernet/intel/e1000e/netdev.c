@@ -7576,9 +7576,6 @@ static struct pci_driver e1000_driver = {
 	.id_table = e1000_pci_tbl,
 	.probe    = e1000_probe,
 	.remove   = e1000_remove,
-	.driver   = {
-		.pm = &e1000_pm_ops,
-	},
 	.shutdown = e1000_shutdown,
 	.err_handler = &e1000_err_handler
 };

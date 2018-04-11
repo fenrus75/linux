@@ -251,9 +251,6 @@ static struct pci_driver igb_driver = {
 	.id_table = igb_pci_tbl,
 	.probe    = igb_probe,
 	.remove   = igb_remove,
-#ifdef CONFIG_PM
-	.driver.pm = &igb_pm_ops,
-#endif
 	.shutdown = igb_shutdown,
 	.sriov_configure = igb_pci_sriov_configure,
 	.err_handler = &igb_err_handler

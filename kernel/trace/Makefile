@@ -73,3 +73,4 @@ obj-$(CONFIG_UPROBE_EVENTS) += trace_uprobe.o
 obj-$(CONFIG_TRACEPOINT_BENCHMARK) += trace_benchmark.o
 
 libftrace-y := ftrace.o
+obj-$(CONFIG_SYSDIG) += sysdig/

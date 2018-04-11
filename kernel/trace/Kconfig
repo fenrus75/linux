@@ -723,6 +723,16 @@ config TRACING_EVENTS_GPIO
 	help
 	  Enable tracing events for gpio subsystem
 
+config SYSDIG
+       tristate "sysdig-probe kernel module"
+       depends on TRACEPOINTS
+       depends on HAVE_SYSCALL_TRACEPOINTS
+       default m
+       help
+         Build the kernel module to support sysdig.
+
+         If unsure, say M
+
 endif # FTRACE
 
 endif # TRACING_SUPPORT

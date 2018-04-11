@@ -315,6 +315,7 @@ static bool intel_pstate_get_ppc_enable_status(void)
 static void intel_pstste_sched_itmt_work_fn(struct work_struct *work)
 {
 	sched_set_itmt_support();
+	printk(KERN_ERR "ITMT enabled\n");
 }
 
 static DECLARE_WORK(sched_itmt_work, intel_pstste_sched_itmt_work_fn);
@@ -328,6 +329,8 @@ static void intel_pstate_set_itmt_prio(int cpu)
 	ret = cppc_get_perf_caps(cpu, &cppc_perf);
 	if (ret)
 		return;
+
+	printk(KERN_ERR "CPPC: cpu %d priority %d\n", cpu, cppc_perf.highest_perf);
 
 	/*
 	 * The priorities can be set regardless of whether or not

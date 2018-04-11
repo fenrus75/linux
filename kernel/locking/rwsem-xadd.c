@@ -381,6 +381,7 @@ done:
 static noinline bool rwsem_spin_on_owner(struct rw_semaphore *sem)
 {
 	struct task_struct *owner = READ_ONCE(sem->owner);
+	int i = 0;
 
 	if (!rwsem_owner_is_writer(owner))
 		goto out;
@@ -404,8 +405,8 @@ static noinline bool rwsem_spin_on_owner(struct rw_semaphore *sem)
 			rcu_read_unlock();
 			return false;
 		}
-
-		cpu_relax();
+		if (i++ > 1000)
+			cpu_relax();
 	}
 	rcu_read_unlock();
 out:

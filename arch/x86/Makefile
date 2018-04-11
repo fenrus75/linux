@@ -242,7 +242,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
 # Avoid indirect branches in kernel to deal with Spectre
 ifdef CONFIG_RETPOLINE
 ifneq ($(RETPOLINE_CFLAGS),)
-  KBUILD_CFLAGS += $(RETPOLINE_CFLAGS) -DRETPOLINE -mzero-caller-saved-regs
+  KBUILD_CFLAGS += $(RETPOLINE_CFLAGS) -DRETPOLINE
 endif
 endif
 
